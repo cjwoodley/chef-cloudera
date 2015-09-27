@@ -1,0 +1,37 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: true
+
+platforms:
+ # - name: ubuntu-12.04
+  - name: centos-6.5
+
+suites:
+  - name: cloudera-mgr
+    driver:
+        vm_hostname: chdmgr.local
+        network: 
+        - ['private_network', {ip: '192.168.56.30'}]
+    run_list:
+      - recipe[cloudera::chdmgr]
+    attributes:
+  - name: cloudera-s1
+    driver:
+      vm_hostname: chds1.local
+      network: 
+        - ['private_network', {ip: '192.168.56.31'}]
+    run_list:
+      - recipe[cloudera::chdmgr]
+    attributes:
+  - name: cloudera-s2
+    driver:
+      vm_hostname: chds2.local
+      network: 
+        - ['private_network', {ip: '192.168.56.32'}]
+    run_list:
+      - recipe[cloudera::chdmgr]
+    attributes:
